@@ -9,24 +9,50 @@ pub struct Ticket {
     status: String,
 }
 
-impl Ticket {
-    pub fn new(title: String, description: String, status: String) -> Ticket {
-        if title.is_empty() {
-            panic!("Title cannot be empty");
-        }
-        if title.len() > 50 {
-            panic!("Title cannot be longer than 50 bytes");
-        }
-        if description.is_empty() {
-            panic!("Description cannot be empty");
-        }
-        if description.len() > 500 {
-            panic!("Description cannot be longer than 500 bytes");
-        }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
-            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
-        }
+fn is_title_valid(title: &String) {
+    if title.is_empty() {
+        panic!("Title cannot be empty");
+    }
+    if title.len() > 50 {
+        panic!("Title cannot be longer than 50 bytes");
+    }
+}
 
+fn is_description_valid(description: &String) {
+    if description.is_empty() {
+        panic!("Description cannot be empty");
+    }
+    if description.len() > 500 {
+        panic!("Description cannot be longer than 500 bytes");
+    }
+}
+
+fn is_status_valid(status: &String) {
+    if status != "To-Do" && status != "In Progress" && status != "Done" {
+        panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
+    }
+}
+
+impl Ticket {
+    pub fn set_title(&mut self, title: String) {
+        is_title_valid(&title);
+        self.title = title;
+    }
+
+    pub fn set_description(&mut self, description: String) {
+        is_description_valid(&description);
+        self.description = description;
+    }
+
+    pub fn set_status(&mut self, status: String) {
+        is_status_valid(&status);
+        self.status = status;
+    }
+
+    pub fn new(title: String, description: String, status: String) -> Ticket {
+        is_title_valid(&title);
+        is_description_valid(&description);
+        is_status_valid(&status);
         Ticket {
             title,
             description,
